@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>КиберБеларусь | ИИ-защита от кибермошенничества в Беларуси #КиберПраво</title>
+  <meta name="description" content="КиберБеларусь — интерактивный ИИ-анализатор фишинга и мошенничества в Беларуси. Проверь подозрительное сообщение, узнай об угрозах и защити себя. #КиберПраво" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=4" />
+</head>
+<body>
+
+  <!-- Scroll Progress Bar -->
+  <div id="scroll-progress"></div>
+
+  <!-- Navigation -->
+  <nav id="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <span class="logo-icon">⬡</span>
+        <span class="logo-text">КИБЕР<span class="logo-accent">БЕЛАРУСЬ</span></span>
+      </div>
+      <div class="nav-links">
+        <a href="#analyzer">Анализатор</a>
+        <a href="#stats">Статистика</a>
+        <a href="#knowledge">База знаний</a>
+        <a href="#quiz">Тест</a>
+      </div>
+      <div class="nav-tag">#КиберПраво</div>
+      <button class="nav-settings-btn" id="nav-settings-btn" onclick="openSettings()" title="Настройки ИИ" aria-label="Настройки">&#9881;</button>
+      <button class="nav-burger" id="nav-burger" aria-label="Меню">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+      <a href="#analyzer" onclick="closeMobileMenu()">Анализатор</a>
+      <a href="#stats" onclick="closeMobileMenu()">Статистика</a>
+      <a href="#knowledge" onclick="closeMobileMenu()">База знаний</a>
+      <a href="#quiz" onclick="closeMobileMenu()">Тест</a>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section id="hero">
+    <canvas id="neural-canvas"></canvas>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Система активна · #КиберПраво
+      </div>
+      <h1 class="hero-title">
+        <span class="title-line">КИБЕР</span>
+        <span class="title-line accent">БЕЛАРУСЬ</span>
+      </h1>
+      <p class="hero-subtitle">
+        Первый в Беларуси интерактивный<br />
+        <span class="highlight">ИИ-анализатор кибермошенничества</span>
+      </p>
+      <p class="hero-desc">
+        Вставь подозрительное сообщение или ссылку — система мгновенно<br class="desktop-br"/>
+        определит угрозу, объяснит каждый красный флаг и научит тебя защищаться.
+      </p>
+      <div class="hero-actions">
+        <a href="#analyzer" class="btn-primary" id="hero-btn-scan">
+          <span class="btn-icon">⬡</span>
+          Начать сканирование
+        </a>
+        <a href="#knowledge" class="btn-secondary">
+          База угроз
+        </a>
+      </div>
+      <div class="hero-stats-row text-center" style="align-items: flex-start;">
+        <div class="hero-stat" style="display: flex; flex-direction: column; align-items: center;">
+          <div style="font-size: 2rem; margin-bottom: 8px; filter: drop-shadow(0 0 8px rgba(0,212,255,0.4));">👤</div>
+          <span class="hs-num">27К+</span><span class="hs-label">киберпреступлений в год</span>
+        </div>
+        <div class="hero-divider" style="align-self: center;"></div>
+        <div class="hero-stat" style="display: flex; flex-direction: column; align-items: center;">
+          <div style="font-size: 2rem; font-weight: 900; font-family: 'Orbitron', sans-serif; color: var(--text-primary); margin-bottom: 8px; filter: drop-shadow(0 0 8px rgba(255,56,96,0.4));">Br</div>
+          <span class="hs-num">Br50М+</span><span class="hs-label">потерь граждан в 2024</span>
+        </div>
+        <div class="hero-divider" style="align-self: center;"></div>
+        <div class="hero-stat" style="display: flex; flex-direction: column; align-items: center;">
+          <div style="font-size: 2rem; margin-bottom: 8px; filter: drop-shadow(0 0 8px rgba(0,230,118,0.4));">🧠</div>
+          <span class="hs-num">97%</span><span class="hs-label">случаев — манипуляции</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll-hint">
+      <div class="scroll-arrow"></div>
+      <span>Прокрути вниз</span>
+    </div>
+  </section>
+
+  <!-- ANALYZER SECTION -->
+  <section id="analyzer">
+    <div class="section-container">
+      <div class="section-label">МОДУЛЬ 01</div>
+      <h2 class="section-title">ИИ-Анализатор угроз</h2>
+      <p class="section-desc">Вставь текст подозрительного сообщения, ссылку или опиши ситуацию — система проведёт полный нейро-анализ за секунды.</p>
+      <div class="ai-engine-row" id="ai-engine-row">
+        <div class="ai-engine-badge" id="ai-mode-badge">
+          <span class="ai-dot"></span>
+          <span class="ai-badge-text" id="ai-badge-text">Загрузка...</span>
+        </div>
+        <button class="ai-setup-link" onclick="openSettings()">⚙️ Настроить Gemini API</button>
+      </div>
+
+      <div class="analyzer-wrap">
+        <div class="analyzer-card glass-card">
+          <div class="analyzer-input-area">
+            <div class="input-header">
+              <span class="input-label">ВХОДЯЩИЙ СИГНАЛ</span>
+              <span class="input-counter" id="char-counter">0 / 1000</span>
+            </div>
+            <textarea
+              id="scan-input"
+              class="scan-textarea"
+              maxlength="1000"
+              placeholder="Вставь сюда текст сообщения, подозрительную ссылку или опиши ситуацию...
+
+Например: «Вы выиграли iPhone! Перейдите по ссылке и введите данные карты для получения приза: http://appl3-prize.ru»"
+            ></textarea>
+            <div class="demo-examples">
+              <span class="demo-label">Примеры для демо:</span>
+              <button class="demo-btn" onclick="loadDemo(0)">🎣 Фишинг</button>
+              <button class="demo-btn" onclick="loadDemo(1)">💳 Банк</button>
+              <button class="demo-btn" onclick="loadDemo(2)">🎁 «Приз»</button>
+              <button class="demo-btn" onclick="loadDemo(3)">📞 Звонок</button>
+              <button class="demo-btn" onclick="loadDemo(4)">✅ Безопасный</button>
+              <button class="demo-btn" onclick="loadDemo(5)">🛒 Куфар</button>
+            </div>
+          </div>
+          <div class="analyzer-footer">
+            <button class="btn-scan" id="btn-scan" onclick="startScan()">
+              <span class="scan-icon">◈</span>
+              Запустить нейро-сканирование
+            </button>
+            <button class="btn-clear" onclick="clearScan()">Очистить</button>
+          </div>
+        </div>
+
+        <!-- Progress & Result -->
+        <div class="result-area" id="result-area">
+          <!-- scanning state -->
+          <div class="scanning-state" id="scanning-state" style="display:none;">
+            <div class="scan-animation">
+              <div class="scan-ring ring1"></div>
+              <div class="scan-ring ring2"></div>
+              <div class="scan-ring ring3"></div>
+              <div class="scan-core">◈</div>
+            </div>
+            <div class="scan-progress-bar">
+              <div class="scan-progress-fill" id="scan-progress-fill"></div>
+            </div>
+            <div class="scan-status-text" id="scan-status-text">Инициализация...</div>
+          </div>
+
+          <!-- result state -->
+          <div class="result-state" id="result-state" style="display:none;">
+            <div class="verdict-card" id="verdict-card">
+              <div class="verdict-header">
+                <div class="verdict-icon" id="verdict-icon">⚠</div>
+                <div class="verdict-info">
+                  <div class="verdict-label">ВЕРДИКТ СИСТЕМЫ</div>
+                  <div class="verdict-level" id="verdict-level">Анализ...</div>
+                </div>
+                <div class="threat-meter">
+                  <div class="threat-label">Угроза</div>
+                  <div class="threat-arc-wrap">
+                    <svg viewBox="0 0 100 60" class="threat-arc-svg">
+                      <path d="M10,55 A45,45 0 0,1 90,55" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="8" stroke-linecap="round"/>
+                      <path id="threat-arc" d="M10,55 A45,45 0 0,1 90,55" fill="none" stroke="#00d4ff" stroke-width="8" stroke-linecap="round" stroke-dasharray="0 141"/>
+                    </svg>
+                    <div class="threat-percent" id="threat-percent">0%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="verdict-summary" id="verdict-summary"></div>
+              <div class="flags-section" id="flags-section">
+                <div class="flags-title">🚩 Обнаруженные красные флаги</div>
+                <div class="flags-list" id="flags-list"></div>
+              </div>
+              <div class="tips-section" id="tips-section">
+                <div class="tips-title">🛡️ Как защититься</div>
+                <div class="tips-list" id="tips-list"></div>
+              </div>
+              <button class="btn-secondary rescan-btn" onclick="resetScan()">← Сканировать снова</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS SECTION -->
+  <section id="stats">
+    <div class="stats-bg-glow"></div>
+    <div class="section-container">
+      <div class="section-label">МОДУЛЬ 02</div>
+      <h2 class="section-title">Масштаб угрозы в Беларуси</h2>
+      <p class="section-desc">Цифры, которые заставляют действовать прямо сейчас.</p>
+      <div class="stats-grid">
+        <div class="stat-card glass-card" data-target="27000" data-suffix="+" data-prefix="" data-label="киберпреступлений зарегистрировано в Беларуси ежегодно">
+          <div class="stat-icon">👤</div>
+          <div class="stat-num" id="sc-0">0</div>
+          <div class="stat-label">киберпреступлений зарегистрировано в Беларуси ежегодно</div>
+        </div>
+        <div class="stat-card glass-card" data-target="50" data-suffix="М+ Br" data-prefix="" data-label="потеряно гражданами Беларуси от кибермошенников в 2024 году">
+          <div class="stat-icon">💸</div>
+          <div class="stat-num" id="sc-1">0</div>
+          <div class="stat-label">миллионов рублей потеряно гражданами Беларуси в 2024 году</div>
+        </div>
+        <div class="stat-card glass-card" data-target="97" data-suffix="%" data-prefix="" data-label="случаев мошенничества основаны на психологических манипуляциях">
+          <div class="stat-icon">🧠</div>
+          <div class="stat-num" id="sc-2">0</div>
+          <div class="stat-label">случаев основаны на манипуляции, а не на взломе</div>
+        </div>
+        <div class="stat-card glass-card" data-target="3" data-suffix=" мин" data-prefix="" data-label="в среднем жертва принимает решение под давлением мошенника">
+          <div class="stat-icon">⏱</div>
+          <div class="stat-num" id="sc-3">0</div>
+          <div class="stat-label">минуты — среднее время принятия решения под давлением</div>
+        </div>
+        <div class="stat-card glass-card" data-target="1" data-suffix=" из 4" data-prefix="" data-label="белорусов хотя бы раз сталкивался с попыткой интернет-мошенничества">
+          <div class="stat-icon">🎣</div>
+          <div class="stat-num" id="sc-4">0</div>
+          <div class="stat-label">из 4 белорусов сталкивались с попыткой интернет-мошенничества</div>
+        </div>
+        <div class="stat-card glass-card" data-target="15" data-suffix="сек" data-prefix="" data-label="нужно мошеннику, чтобы создать убедительную копию сайта">
+          <div class="stat-icon">⚡</div>
+          <div class="stat-num" id="sc-5">0</div>
+          <div class="stat-label">секунд нужно мошеннику для создания фишинговой страницы</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KNOWLEDGE SECTION -->
+  <section id="knowledge">
+    <div class="section-container">
+      <div class="section-label">МОДУЛЬ 03</div>
+      <h2 class="section-title">Досье угроз</h2>
+      <p class="section-desc">Наведи на карточку, чтобы изучить досье. Знание — главное оружие против мошенников.</p>
+      <div class="knowledge-grid">
+
+        <div class="flip-card">
+          <div class="flip-inner">
+            <div class="flip-front glass-card">
+              <div class="threat-cat-icon">🎣</div>
+              <div class="threat-cat-name">Фишинг</div>
+              <div class="threat-cat-sub">Уровень угрозы: ВЫСОКИЙ</div>
+              <div class="flip-hint">Наведи для подробностей</div>
+            </div>
+            <div class="flip-back glass-card">
+              <div class="back-title">🎣 Фишинг</div>
+              <div class="back-desc">Поддельные письма и сайты, копирующие банки, госсервисы и магазины. Цель — украсть логин, пароль или данные карты.</div>
+              <div class="back-signs"><strong>Признаки:</strong> подозрительный домен, срочность, орфографические ошибки, запрос персональных данных.</div>
+              <div class="back-protect"><strong>Защита:</strong> всегда проверяй адрес сайта вручную, используй двухфакторную аутентификацию, не переходи по ссылкам из писем и SMS.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card">
+          <div class="flip-inner">
+            <div class="flip-front glass-card">
+              <div class="threat-cat-icon">📞</div>
+              <div class="threat-cat-name">Вишинг</div>
+              <div class="threat-cat-sub">Уровень угрозы: КРИТИЧЕСКИЙ</div>
+              <div class="flip-hint">Наведи для подробностей</div>
+            </div>
+            <div class="flip-back glass-card">
+              <div class="back-title">📞 Вишинг (Голосовой фишинг)</div>
+              <div class="back-desc">Звонки от «сотрудников банка», «полиции» или «ФСБ». Создают панику и убеждают перевести деньги «на безопасный счёт».</div>
+              <div class="back-signs"><strong>Признаки:</strong> неожиданный звонок, угрозы, просьба не класть трубку, запрос CVV или SMS-кода.</div>
+              <div class="back-protect"><strong>Защита:</strong> немедленно положи трубку, сам перезвони в банк по номеру на карте или официальном сайте. Сообщи о звонке на горячую линию МВД: 102.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card">
+          <div class="flip-inner">
+            <div class="flip-front glass-card">
+              <div class="threat-cat-icon">💌</div>
+              <div class="threat-cat-name">Смишинг</div>
+              <div class="threat-cat-sub">Уровень угрозы: ВЫСОКИЙ</div>
+              <div class="flip-hint">Наведи для подробностей</div>
+            </div>
+            <div class="flip-back glass-card">
+              <div class="back-title">💌 Смишинг (SMS-фишинг)</div>
+              <div class="back-desc">Мошеннические SMS с ссылками: «Ваша посылка задержана», «Вам начислен кэшбэк», «Ваш аккаунт заблокирован».</div>
+              <div class="back-signs"><strong>Признаки:</strong> незнакомый отправитель, укороченные ссылки (bit.ly), призыв действовать «прямо сейчас».</div>
+              <div class="back-protect"><strong>Защита:</strong> не переходи по ссылкам из SMS. Открой официальный сайт вручную или позвони на горячую линию.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card">
+          <div class="flip-inner">
+            <div class="flip-front glass-card">
+              <div class="threat-cat-icon">🏪</div>
+              <div class="threat-cat-name">Фейк-магазины</div>
+              <div class="threat-cat-sub">Уровень угрозы: ВЫСОКИЙ</div>
+              <div class="flip-hint">Наведи для подробностей</div>
+            </div>
+            <div class="flip-back glass-card">
+              <div class="back-title">🏪 Поддельные интернет-магазины</div>
+              <div class="back-desc">Сайты-клоны известных магазинов или просто красивые лендинги с «невероятными ценами». После оплаты — тишина.</div>
+              <div class="back-signs"><strong>Признаки:</strong> цены ниже рынка на 30%+, нет юридических реквизитов, только предоплата, домен зарегистрирован недавно.</div>
+              <div class="back-protect"><strong>Защита:</strong> проверяй отзывы на независимых площадках, используй виртуальную карту для онлайн-покупок.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card">
+          <div class="flip-inner">
+            <div class="flip-front glass-card">
+              <div class="threat-cat-icon">💰</div>
+              <div class="threat-cat-name">Инвест-мошенничество</div>
+              <div class="threat-cat-sub">Уровень угрозы: КРИТИЧЕСКИЙ</div>
+              <div class="flip-hint">Наведи для подробностей</div>
+            </div>
+            <div class="flip-back glass-card">
+              <div class="back-title">💰 Инвест-мошенничество</div>
+              <div class="back-desc">«Гарантированный доход 50% в месяц», «Крипто-бот», «Инсайдерские сигналы». Классические финансовые пирамиды в цифровой упаковке.</div>
+              <div class="back-signs"><strong>Признаки:</strong> гарантированная доходность, давление «успей сейчас», вывод средств затруднён.</div>
+              <div class="back-protect"><strong>Защита:</strong> проверяй лицензию в реестре Национального банка РБ (nbrb.by), помни: законные инвестиции не гарантируют прибыль.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card">
+          <div class="flip-inner">
+            <div class="flip-front glass-card">
+              <div class="threat-cat-icon">❤️</div>
+              <div class="threat-cat-name">Романтическое мошенничество</div>
+              <div class="threat-cat-sub">Уровень угрозы: СРЕДНИЙ</div>
+              <div class="flip-hint">Наведи для подробностей</div>
+            </div>
+            <div class="flip-back glass-card">
+              <div class="back-title">❤️ Романтическое мошенничество</div>
+              <div class="back-desc">Месяцами выстраивают «отношения» онлайн, а затем просят денег на «билет», «лечение» или «бизнес-проект».</div>
+              <div class="back-signs"><strong>Признаки:</strong> никогда не выходят на видеосвязь, живут «за рубежом», отношения развиваются слишком быстро.</div>
+              <div class="back-protect"><strong>Защита:</strong> проверь фото через обратный поиск изображений, никогда не переводи деньги людям, которых не видел лично.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ SECTION -->
+  <section id="quiz">
+    <div class="quiz-bg-glow"></div>
+    <div class="section-container">
+      <div class="section-label">МОДУЛЬ 04</div>
+      <h2 class="section-title">Тест-вызов: найди мошенника</h2>
+      <p class="section-desc">5 вопросов — проверь, готов ли ты противостоять реальным атакам. Получи свой ранг защитника.</p>
+
+      <div class="quiz-wrap glass-card" id="quiz-wrap">
+        <!-- Start screen -->
+        <div class="quiz-start" id="quiz-start">
+          <div class="quiz-start-icon">🛡️</div>
+          <h3>Готов к испытанию?</h3>
+          <p>5 вопросов · Реальные сценарии · Ранг защитника</p>
+          <button class="btn-primary" onclick="startQuiz()">Начать тест</button>
+        </div>
+
+        <!-- Question screen -->
+        <div class="quiz-question-screen" id="quiz-question-screen" style="display:none;">
+          <div class="quiz-progress-bar">
+            <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+          </div>
+          <div class="quiz-qnum" id="quiz-qnum">Вопрос 1 из 5</div>
+          <div class="quiz-question" id="quiz-question"></div>
+          <div class="quiz-options" id="quiz-options"></div>
+          <div class="quiz-feedback" id="quiz-feedback" style="display:none;"></div>
+        </div>
+
+        <!-- Result screen -->
+        <div class="quiz-result-screen" id="quiz-result-screen" style="display:none;">
+          <div class="result-rank-icon" id="result-rank-icon"></div>
+          <div class="result-rank-title" id="result-rank-title"></div>
+          <div class="result-score" id="result-score"></div>
+          <div class="result-desc" id="result-desc"></div>
+          <div class="result-actions">
+            <button class="btn-primary" onclick="restartQuiz()">Пройти снова</button>
+            <a href="#analyzer" class="btn-secondary">Проверить сообщение</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFFICIAL SUPPORT -->
+  <section id="official-support" style="text-align: center; padding: 56px 24px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg-dark);">
+    <h3 style="font-family: 'Orbitron', 'Rajdhani', sans-serif; color: var(--text-muted); font-size: 0.9rem; letter-spacing: 3px; margin-bottom: 36px; text-transform: uppercase;">При поддержке государственных инициатив</h3>
+    <div style="display: flex; justify-content: center; align-items: center; gap: 64px; flex-wrap: wrap;">
+      
+      <!-- РЕСПУБЛИКА БЕЛАРУСЬ -->
+      <div style="display: flex; align-items: center; gap: 20px; text-align: left; background: rgba(255,255,255,0.02); padding: 16px 24px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); min-width: 300px;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/85/Flag_of_Belarus.svg" alt="Флаг РБ" style="height: 54px; width: 108px; object-fit: cover; border-radius: 4px; box-shadow: 0 4px 12px rgba(255, 0, 60, 0.2);">
+        <div>
+          <div style="font-family: 'Orbitron', sans-serif; font-weight: 700; color: var(--text-primary); font-size: 1.15rem; letter-spacing: 1px;">РЕСПУБЛИКА БЕЛАРУСЬ</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; margin-top: 4px;">Президент Республики Беларусь<br><strong style="color:var(--text-primary);">А. Г. Лукашенко</strong></div>
+        </div>
+      </div>
+
+      <!-- МВД БЕЛАРУСИ -->
+      <div style="display: flex; align-items: center; gap: 20px; text-align: left; background: rgba(255,255,255,0.02); padding: 16px 24px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); min-width: 300px;">
+        <svg width="56" height="64" viewBox="0 0 24 28" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 8px rgba(0, 230, 118, 0.5));">
+          <path d="M12 26s8-4 8-12V6l-8-4-8 4v8c0 8 8 12 8 12z" fill="rgba(0, 230, 118, 0.1)"/>
+          <polygon points="12,7 13.5,10.5 17,11 14.5,13.5 15,17 12,15 9,17 9.5,13.5 7,11 10.5,10.5" fill="var(--accent)" />
+        </svg>
+        <div>
+          <div style="font-family: 'Orbitron', sans-serif; font-weight: 700; color: var(--text-primary); font-size: 1.15rem; letter-spacing: 1px;">МВД БЕЛАРУСИ</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; margin-top: 4px;">Министр внутренних дел<br><strong style="color:var(--text-primary);">И. В. Кубраков</strong><br><span style="font-size:0.7rem;">(генерал-лейтенант милиции)</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="footer-glow"></div>
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <span class="logo-icon">⬡</span>
+            <span class="logo-text">КИБЕР<span class="logo-accent">БЕЛАРУСЬ</span></span>
+          </div>
+          <p class="footer-tagline">Образовательная платформа по кибербезопасности Беларуси</p>
+          <div class="footer-hashtag">#КиберПраво</div>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <div class="footer-col-title">Разделы</div>
+            <a href="#analyzer">ИИ-Анализатор</a>
+            <a href="#stats">Статистика</a>
+            <a href="#knowledge">База знаний</a>
+            <a href="#quiz">Тест-вызов</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-title">Полезные ресурсы</div>
+            <a href="https://mvd.gov.by" target="_blank" rel="noopener">МВД Беларуси</a>
+            <a href="https://www.nbrb.by" target="_blank" rel="noopener">Нацбанк РБ</a>
+            <a href="https://cert.by" target="_blank" rel="noopener">CERT Беларуси</a>
+            <a href="https://portal.gov.by" target="_blank" rel="noopener">Портал Госуслуг РБ</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">
+          © 2025 КиберБеларусь · Образовательный проект для Беларуси · Все материалы предназначены для защиты граждан от кибермошенничества
+        </div>
+        <div class="footer-tech">
+          Шрифты: Google Fonts · Иконки: Unicode Emoji · Код: Vanilla JS
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+
+  <!-- ===== SETTINGS MODAL ===== -->
+  <div id="settings-backdrop" class="modal-backdrop" onclick="closeSettings()" style="display:none;"></div>
+  <div id="settings-modal" class="settings-modal" style="display:none;">
+    <div class="smodal-header">
+      <div class="smodal-title">
+        <span class="smodal-icon">⚙️</span>
+        <span>Настройки ИИ-анализатора</span>
+      </div>
+      <button class="smodal-close" onclick="closeSettings()">✕</button>
+    </div>
+    <div class="smodal-body">
+      <div class="smodal-section">
+        <div class="smodal-engine-badge">
+          <span class="gemini-logo">&#9670;</span>
+          <span>Google Gemini AI</span>
+        </div>
+        <p class="smodal-desc">Для активации полноценного ИИ-анализа на базе Google Gemini 2.0 Flash необходим один бесплатный API ключ. Без ключа работает локальный анализатор.</p>
+      </div>
+      <div class="smodal-steps">
+        <div class="smodal-step">
+          <div class="step-badge">1</div>
+          <div class="step-content">Перейдите на <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">aistudio.google.com/app/apikey</a> и зарегистрируйтесь (бесплатно)</div>
+        </div>
+        <div class="smodal-step">
+          <div class="step-badge">2</div>
+          <div class="step-content">Нажмите <strong>«Create API key»</strong> и скопируйте ключ</div>
+        </div>
+        <div class="smodal-step">
+          <div class="step-badge">3</div>
+          <div class="step-content">Вставьте ключ ниже и нажмите «Сохранить»</div>
+        </div>
+      </div>
+      <div class="smodal-input-row">
+        <input type="password" id="gemini-api-input" class="smodal-input" placeholder="AIzaSy..."/>
+        <button class="smodal-save-btn" onclick="saveGeminiKey()">Сохранить</button>
+      </div>
+      <div id="smodal-status" class="smodal-status"></div>
+      <div class="smodal-actions">
+        <button class="smodal-clear-btn" onclick="clearGeminiKey()">Удалить ключ</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
