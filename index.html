@@ -15,6 +15,19 @@
   <!-- Scroll Progress Bar -->
   <div id="scroll-progress"></div>
 
+  <!-- AGE RESTRICTION MODAL -->
+  <div id="age-modal-backdrop" class="modal-backdrop" style="display:flex; z-index: 10000; align-items: center; justify-content: center; position: fixed; inset: 0; background: rgba(2, 11, 24, 0.95); backdrop-filter: blur(15px);">
+    <div id="age-modal" class="glass-card" style="padding: 40px; max-width: 450px; text-align: center; border-color: var(--neon-cyan); box-shadow: 0 0 40px rgba(255, 0, 60, 0.2); animation: modal-in 0.3s ease;">
+      <div style="font-size: 3.5rem; margin-bottom: 20px; filter: drop-shadow(0 0 10px rgba(255,0,60,0.5));">🔞</div>
+      <h2 style="font-family: 'Orbitron', sans-serif; color: var(--text-primary); margin-bottom: 16px; font-size: 1.6rem; letter-spacing: 1px;">ВОЗРАСТНОЕ <span style="color: var(--danger);">ОГРАНИЧЕНИЕ</span></h2>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 32px; line-height: 1.5;">Внимание! Этот сайт предназначен для пользователей старше 10 лет. Пожалуйста, подтвердите ваш возраст для доступа к материалам проекта.</p>
+      <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+        <button class="btn-primary" onclick="acceptAge()" style="flex: 1; padding: 12px 20px;">Мне есть 10 лет</button>
+        <button class="btn-secondary" onclick="rejectAge()" style="flex: 1; padding: 12px 20px; border-color: rgba(255,255,255,0.2); color: var(--text-muted);">Мне нет 10 лет</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Navigation -->
   <nav id="navbar">
     <div class="nav-container">

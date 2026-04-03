@@ -733,3 +733,31 @@ document.querySelectorAll('.stat-card, .flip-card, .section-title, .section-desc
   el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
   fadeObserver.observe(el);
 });
+
+/* ========================================================
+   ВОЗРАСТНОЕ ОГРАНИЧЕНИЕ
+   ======================================================== */
+const AGE_KEY = 'neuroshift_age_verified';
+
+document.addEventListener('DOMContentLoaded', () => {
+  const verified = localStorage.getItem(AGE_KEY);
+  const backdrop = document.getElementById('age-modal-backdrop');
+  
+  if (!verified && backdrop) {
+    document.body.style.overflow = 'hidden'; // Запрещаем прокрутку
+  } else if (backdrop) {
+    backdrop.style.display = 'none';
+  }
+});
+
+window.acceptAge = function() {
+  localStorage.setItem(AGE_KEY, 'true');
+  const backdrop = document.getElementById('age-modal-backdrop');
+  if (backdrop) backdrop.style.display = 'none';
+  document.body.style.overflow = '';
+};
+
+window.rejectAge = function() {
+  alert('Извините, этот сайт содержит материалы, предназначенные только для лиц старше 10 лет.');
+  window.location.href = 'https://www.google.com';
+};
